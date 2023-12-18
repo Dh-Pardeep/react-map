@@ -34,6 +34,12 @@ const TodoApp = () => {
         }
     };
 
+    const cancelEdit = () => {
+        setEditIndex(null);
+        setIsEditing(false);
+        setTaskInput('');
+    };
+
     const removeTask = (index) => {
         const newTasks = [...tasks];
         newTasks.splice(index, 1);
@@ -84,7 +90,7 @@ const TodoApp = () => {
                             <div
                                 style={{
                                     opacity: task.completed ? 0.3 : 1,
-                                    width: '60%',
+                                    width: '40%',
                                     overflow: 'hidden',
                                 }}
                             >
@@ -123,6 +129,18 @@ const TodoApp = () => {
                                 >
                                     {isEditing && editIndex === index ? 'Save' : 'Edit'}
                                 </button>
+                                {isEditing && editIndex === index && (
+                                    <button
+                                        className='edit_btn'
+                                        onClick={cancelEdit}
+                                        disabled={task.completed}
+                                        style={{
+                                            opacity: task.completed ? 0.3 : 1,
+                                        }}
+                                    >
+                                        Cancel
+                                    </button>
+                                )}
                             </div>
                         </li>
                     ))}
