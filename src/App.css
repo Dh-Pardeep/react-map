@@ -70,7 +70,7 @@
   color: white;
 }
 
-.edit_btn {
+.check_btn {
   outline: none;
   border: none;
   background-color: white;
@@ -88,4 +88,23 @@
   background: #FFF;
   width: 450px;
   padding: 29px 26px;
+}
+
+.edit_btn {
+  color: #FFF;
+  margin-left:6px;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  padding: 4px 10px;
+  font-family: "Inter", sans-serif;
+  border-radius: 8px;
+  background: #2563EB;
+  border: none;
+}
+/* Add this to your CSS */
+.check_btn.toggling {
+  opacity: 0.5; /* Adjust the opacity level as needed */
 }
