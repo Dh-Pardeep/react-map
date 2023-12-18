@@ -33,7 +33,7 @@ const TodoApp = () => {
     };
 
     const editTask = (index) => {
-        setTaskInput(tasks[index].text);
+        setTaskInput(tasks[index].text); // Update taskInput with the current task's text
         setEditIndex(index);
     };
 
@@ -51,7 +51,6 @@ const TodoApp = () => {
                     <button className='task_btn ' onClick={addTask}>
                         {editIndex !== null ? 'Save' : 'Add'}
                     </button>
-
                 </div>
                 <ul className='mt-3 map_width ps-0'>
                     {tasks.map((task, index) => (
@@ -61,7 +60,7 @@ const TodoApp = () => {
                                 textDecoration: task.completed ? 'line-through' : 'none',
                             }}>
                             <div style={{
-                                opacity: task.completed ? 0.3 : 1, width: '60%', overflow: 'scroll',
+                                opacity: task.completed ? 0.3 : 1, width: '60%', overflow: 'hidden',
                             }}>
                                 {task.text}
                             </div>
@@ -79,7 +78,9 @@ const TodoApp = () => {
                                     </svg>
                                     )}
                                 </button>
-                                <button className='edit_btn ' onClick={() => editTask(index)}>
+                                <button className='edit_btn' onClick={() => editTask(index)} disabled={task.completed} style={{
+                                    opacity: task.completed ? 0.3 : 1,
+                                }}>
                                     Edit
                                 </button>
                             </div>
