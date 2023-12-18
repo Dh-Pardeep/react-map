@@ -61,7 +61,7 @@ const TodoApp = () => {
                                 textDecoration: task.completed ? 'line-through' : 'none',
                             }}>
                             <div style={{
-                                opacity: task.completed ? 0.3 : 1, // Set opacity based on completion
+                                opacity: task.completed ? 0.3 : 1, width: '60%', overflow: 'scroll',
                             }}>
                                 {task.text}
                             </div>
