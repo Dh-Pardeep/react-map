@@ -4,6 +4,7 @@ const TodoApp = () => {
     const [tasks, setTasks] = useState([]);
     const [taskInput, setTaskInput] = useState('');
     const [editIndex, setEditIndex] = useState(null);
+    const [isEditing, setIsEditing] = useState(false);
 
     const addTask = () => {
         if (editIndex !== null) {
@@ -12,12 +13,25 @@ const TodoApp = () => {
             editedTasks[editIndex].text = taskInput;
             setTasks(editedTasks);
             setEditIndex(null);
+            setIsEditing(false);
         } else if (taskInput.trim() !== '') {
             // Adding a new task
             setTasks([...tasks, { text: taskInput, completed: false }]);
         }
 
         setTaskInput('');
+    };
+
+    const saveTask = () => {
+        if (editIndex !== null) {
+            // Save the edited task
+            const editedTasks = [...tasks];
+            editedTasks[editIndex].text = taskInput;
+            setTasks(editedTasks);
+            setEditIndex(null);
+            setIsEditing(false);
+            setTaskInput('');
+        }
     };
 
     const removeTask = (index) => {
@@ -33,12 +47,17 @@ const TodoApp = () => {
     };
 
     const editTask = (index) => {
-        setTaskInput(tasks[index].text); // Update taskInput with the current task's text
+        setTaskInput(tasks[index].text); // Set input to the current task's text
         setEditIndex(index);
+        setIsEditing(true);
+    };
+
+    const handleInputChange = (e) => {
+        setTaskInput(e.target.value);
     };
 
     return (
-        <div className='container d-flex align-items-center justify-content-center  '>
+        <div className='container d-flex align-items-center justify-content-center'>
             <div className='border_full_box mt-5'>
                 <h1 className='todos text-center'>Todos</h1>
                 <div className='input_full_border d-flex justify-content-between'>
@@ -46,23 +65,39 @@ const TodoApp = () => {
                         className='input_border ps-2'
                         type="text"
                         value={taskInput}
-                        onChange={(e) => setTaskInput(e.target.value)}
+                        onChange={handleInputChange}
+                        disabled={isEditing}
                     />
-                    <button className='task_btn ' onClick={addTask}>
-                        {editIndex !== null ? 'Save' : 'Add'}
+                    <button className='task_btn' onClick={addTask}>
+                        Add
                     </button>
                 </div>
                 <ul className='mt-3 map_width ps-0'>
                     {tasks.map((task, index) => (
-                        <li className='d-flex justify-content-between map_border px-3 py-2 '
+                        <li
+                            className='d-flex justify-content-between map_border px-3 py-2'
                             key={index}
                             style={{
                                 textDecoration: task.completed ? 'line-through' : 'none',
-                            }}>
-                            <div style={{
-                                opacity: task.completed ? 0.3 : 1, width: '60%', overflow: 'hidden',
-                            }}>
-                                {task.text}
+                            }}
+                        >
+                            <div
+                                style={{
+                                    opacity: task.completed ? 0.3 : 1,
+                                    width: '60%',
+                                    overflow: 'hidden',
+                                }}
+                            >
+                                {isEditing && editIndex === index ? (
+                                    <input
+                                        className='edit_change_class'
+                                        type="text"
+                                        value={taskInput}
+                                        onChange={handleInputChange}
+                                    />
+                                ) : (
+                                    task.text
+                                )}
                             </div>
                             <div>
                                 <button className='delete_btn ' onClick={() => removeTask(index)}><svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -78,10 +113,15 @@ const TodoApp = () => {
                                     </svg>
                                     )}
                                 </button>
-                                <button className='edit_btn' onClick={() => editTask(index)} disabled={task.completed} style={{
-                                    opacity: task.completed ? 0.3 : 1,
-                                }}>
-                                    Edit
+                                <button
+                                    className='edit_btn'
+                                    onClick={isEditing && editIndex === index ? saveTask : () => editTask(index)}
+                                    disabled={task.completed}
+                                    style={{
+                                        opacity: task.completed ? 0.3 : 1,
+                                    }}
+                                >
+                                    {isEditing && editIndex === index ? 'Save' : 'Edit'}
                                 </button>
                             </div>
                         </li>

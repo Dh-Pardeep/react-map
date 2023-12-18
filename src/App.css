@@ -105,6 +105,8 @@
   border: none;
 }
 /* Add this to your CSS */
-.check_btn.toggling {
-  opacity: 0.5; /* Adjust the opacity level as needed */
+
+.edit_change_class{
+  border: none;
+  outline: none;
 }
