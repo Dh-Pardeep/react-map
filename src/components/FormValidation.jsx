@@ -11,10 +11,7 @@ const FormValidation = () => {
 
     const formSubmit = (e) => {
         e.preventDefault();
-
-        setError(false); // Reset the error state
-
-        // Check for empty fields
+        setError(false);
         if (
             formdata.firstName === "" ||
             formdata.lastName === "" ||
@@ -23,11 +20,7 @@ const FormValidation = () => {
             setError(true);
             return;
         }
-
-        // Continue with form submission logic
         console.log(formdata);
-
-        // Clear form data after successful submission
         setFormdata({
             firstName: "",
             lastName: "",
@@ -39,7 +32,7 @@ const FormValidation = () => {
         <section className="py-5" id="form_validation">
             <div className="container d-flex align-items-center justify-content-center">
                 <form
-                    className="d-flex flex-column gap-4 justify-content-center"
+                    className="d-flex flex-column gap-4 justify-content-center w-25 position-relative"
                     onSubmit={formSubmit}
                 >
                     <input
@@ -51,9 +44,8 @@ const FormValidation = () => {
                         }
                     />
                     {error && formdata.firstName === "" && (
-                        <p className="text-danger">First Name is required</p>
+                        <p className="text-danger  position-absolute error_one start-50 translate-middle-x ">First Name is required</p>
                     )}
-
                     <input
                         type="text"
                         placeholder="Last Name"
@@ -63,9 +55,8 @@ const FormValidation = () => {
                         }
                     />
                     {error && formdata.lastName === "" && (
-                        <p className="text-danger">Last Name is required</p>
+                        <p className="text-danger position-absolute error_two start-50 translate-middle-x">Last Name is required</p>
                     )}
-
                     <input
                         type="email"
                         placeholder="Your Email"
@@ -75,9 +66,8 @@ const FormValidation = () => {
                         }
                     />
                     {error && formdata.email === "" && (
-                        <p className="text-danger">Email is required</p>
+                        <p className="text-danger position-absolute error_three start-50 translate-middle-x">Email is required</p>
                     )}
-
                     <input type="submit" />
                 </form>
             </div>

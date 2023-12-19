@@ -92,7 +92,7 @@
 
 .edit_btn {
   color: #FFF;
-  margin-left:6px;
+  margin-left: 6px;
   font-family: Inter;
   font-size: 14px;
   font-style: normal;
@@ -104,9 +104,23 @@
   background: #2563EB;
   border: none;
 }
-/* Add this to your CSS */
 
-.edit_change_class{
+.edit_change_class {
   border: none;
   outline: none;
+}
+
+.error_one {
+  top: 30px;
+  font-size: 14px;
+}
+
+.error_two {
+  top: 83px;
+  font-size: 14px;
+}
+
+.error_three {
+  bottom: 15px;
+  font-size: 14px;
 }
