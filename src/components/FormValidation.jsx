@@ -7,19 +7,85 @@ const FormValidation = () => {
         email: "",
     });
 
-    const [error, setError] = useState(false);
+    const regexFirstName = /^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)$/;
+    const regexEmail = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+    const [errors, setErrors] = useState({
+        firstName: false,
+        lastName: false,
+        email: false,
+    });
+
+    const validateField = (fieldName, value) => {
+        switch (fieldName) {
+            case "firstName":
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    firstName: !regexFirstName.test(value),
+                }));
+                break;
+            case "lastName":
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    lastName: !regexFirstName.test(value),
+                }));
+                break;
+            case "email":
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    email: !regexEmail.test(value),
+                }));
+                break;
+            default:
+                break;
+        }
+    };
+
+    const handleInputChange = (fieldName, value) => {
+        setFormdata((prevFormData) => ({ ...prevFormData, [fieldName]: value }));
+        validateField(fieldName, value);
+    };
 
     const formSubmit = (e) => {
         e.preventDefault();
-        setError(false);
-        if (
-            formdata.firstName === "" ||
-            formdata.lastName === "" ||
-            formdata.email === ""
-        ) {
-            setError(true);
+
+        // Reset all errors
+        setErrors({
+            firstName: false,
+            lastName: false,
+            email: false,
+        });
+
+        // Validation for empty fields
+        if (formdata.firstName === "" || formdata.lastName === "" || formdata.email === "") {
+            setErrors({
+                firstName: formdata.firstName === "",
+                lastName: formdata.lastName === "",
+                email: formdata.email === "",
+            });
+            console.log("Please enter all fields.");
             return;
         }
+
+        // Validation for regex
+        if (!regexFirstName.test(formdata.firstName)) {
+            setErrors((prevErrors) => ({ ...prevErrors, firstName: true }));
+            console.log("Invalid First Name");
+            return;
+        }
+        if (!regexFirstName.test(formdata.lastName)) {
+            setErrors((prevErrors) => ({ ...prevErrors, lastName: true }));
+            console.log("Invalid Last Name");
+            return;
+        }
+
+        if (!regexEmail.test(formdata.email)) {
+            setErrors((prevErrors) => ({ ...prevErrors, email: true }));
+            console.log("Invalid Email");
+            return;
+        }
+
+        // If all validations pass, log the form data and reset the form
         console.log(formdata);
         setFormdata({
             firstName: "",
@@ -39,35 +105,42 @@ const FormValidation = () => {
                         type="text"
                         placeholder="First Name"
                         value={formdata.firstName}
-                        onChange={(e) =>
-                            setFormdata({ ...formdata, firstName: e.target.value })
-                        }
+                        onChange={(e) => handleInputChange("firstName", e.target.value)}
                     />
-                    {error && formdata.firstName === "" && (
-                        <p className="text-danger  position-absolute error_one start-50 translate-middle-x ">First Name is required</p>
+                    {errors.firstName && (
+                        <p className="text-danger position-absolute error_one start-0 mb-0">
+                            {formdata.firstName === ""
+                                ? "Please enter your First Name."
+                                : "Invalid First Name"}
+                        </p>
                     )}
+
                     <input
                         type="text"
                         placeholder="Last Name"
                         value={formdata.lastName}
-                        onChange={(e) =>
-                            setFormdata({ ...formdata, lastName: e.target.value })
-                        }
+                        onChange={(e) => handleInputChange("lastName", e.target.value)}
                     />
-                    {error && formdata.lastName === "" && (
-                        <p className="text-danger position-absolute error_two start-50 translate-middle-x">Last Name is required</p>
+                    {errors.lastName && (
+                        <p className="text-danger position-absolute error_two start-0 mb-0">
+                            {formdata.lastName === ""
+                                ? "Please enter your Last Name."
+                                : "Invalid Last Name"}
+                        </p>
                     )}
+
                     <input
                         type="email"
                         placeholder="Your Email"
                         value={formdata.email}
-                        onChange={(e) =>
-                            setFormdata({ ...formdata, email: e.target.value })
-                        }
+                        onChange={(e) => handleInputChange("email", e.target.value)}
                     />
-                    {error && formdata.email === "" && (
-                        <p className="text-danger position-absolute error_three start-50 translate-middle-x">Email is required</p>
+                    {errors.email && (
+                        <p className="text-danger position-absolute error_three start-0 mb-0">
+                            {formdata.email === "" ? "Please enter your Email." : "Invalid Email"}
+                        </p>
                     )}
+
                     <input type="submit" />
                 </form>
             </div>

@@ -121,6 +121,10 @@
 }
 
 .error_three {
-  bottom: 15px;
+  bottom: 30px;
   font-size: 14px;
+}
+
+.cl_width_set{
+  max-width: 300px;
 }
