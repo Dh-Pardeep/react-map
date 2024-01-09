@@ -128,3 +128,28 @@
 .cl_width_set{
   max-width: 300px;
 }
+
+.scrollTop {
+  position: fixed;
+  width: 40px;
+  bottom: 20px;
+  padding: 9px;
+  right: 20px;
+  align-items: center;
+  height: 40px !important;
+  justify-content: center;
+  z-index: 1000;
+  cursor: pointer;
+  animation: fadeIn 0.3s;
+  transition: opacity 0.4s;
+  color: white;
+  background: #F1AC73;
+  border-radius: 50%;
+  transition: all 200ms ease-in-out;
+}
+
+.scrollTop:hover {
+  background: white;
+  color: #F1AC73;
+  box-shadow: 0px 4px 25px #F1AC73;
+}
